@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GIPHY API</title>
+</head>
+
+<body>
+
+    <div class="put-buttons"></div>
+
+    <div id="insert-here"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        var topics = ["cats", "dogs", "pigs", "cows"];
+
+        for (i in topics) {
+            $(".put-buttons").append("<button class=" + topics[i] + " data-topic=" + topics[i] + ">" + topics[i] + "</button>");
+            $(this).attr("data-topic", topics[i]);
+        };
+
+        
+
+        $("button").on("click", function () {
+            $("#insert-here").html("");
+            
+            var topic = $(this).attr("data-topic");
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+                topic + "&api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&limit=10";
+
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function (response) {
+                var results = response.data;
+
+                for (i in results) {
+                    var topicDiv = $("<div>");
+                    var p = $("<p>");
+                    var rating = results[i].rating;
+                    var imgURL = results[i].images.fixed_height.url
+
+                    p.text("Rating: " + rating);
+
+                    var topicImage = $("<img>");
+                    topicImage.attr("src", imgURL);
+
+                    topicDiv.append(p);
+                    topicDiv.append(topicImage);
+
+                    $("#insert-here").prepend(topicDiv);
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>

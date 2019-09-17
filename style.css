@@ -1,0 +1,20 @@
+* {
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+body {
+    background-color: paleturquoise;
+}
+
+#gifs {
+    float: left;
+}
+
+#form {
+    float:right;
+}
+
+/* form {
+    border: 10px black;
+} */

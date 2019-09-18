@@ -1,5 +1,7 @@
 var topics = ["cats", "dogs", "pigs", "cows"];
-// var gifs = []
+var gifs = [];
+var check = false;
+var favorite = false;
 function createButtons() {
     for (i in topics) {
 
@@ -21,18 +23,18 @@ $("#submit").on("click", function (event) {
 
 
     topics.push(newButton);
+    $("#newButton").val("");
     createButtons();
 });
 
 
 function displayGifs() {
     $(".topicButtons").on("click", function () {
-        $("#insert-here").html("");
-
+        if (check === false) {
+            $("#insert-here").html("");
+        }
 
         var topic = $(this).attr("data-topic");
-        console.log(topic);
-
         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
             topic + "&api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&limit=10";
 
@@ -40,27 +42,37 @@ function displayGifs() {
             url: queryURL,
             method: "GET"
         }).then(function (response) {
-            var results = response.data;
+            var results = response.data;     
 
             for (i in results) {
                 var topicDiv = $("<div>");
-                var p = $("<p>");
-                var rating = results[i].rating;
+                topicDiv.addClass("together");
+
+
+                var ratingDiv = $("<div>");
+                // var c = $('<input type="checkbox" class="fav-check-input" id="favCheck" onclick="favorite = true">');
+                var rating = (results[i].rating).toUpperCase();
+
+                ratingDiv.text("Rating: " + rating);
+                ratingDiv.addClass("rating")
+
+
                 var stillURL = results[i].images.fixed_height_still.url;
                 var moveURL = results[i].images.fixed_height.url;
 
-                p.text("Rating: " + rating);
 
                 var topicImage = $("<img>");
                 topicImage.attr("src", stillURL);
                 topicImage.attr("data-state", "still");
                 topicImage.addClass("gif");
+
                 topicImage.attr("data-still", stillURL);
                 topicImage.attr("data-animate", moveURL);
 
-                topicDiv.append(p);
+                // topicDiv.append(c);
+                // topicDiv.append("\t Favorite ");
+                topicDiv.append(ratingDiv);
                 topicDiv.append(topicImage);
-
 
                 $("#insert-here").prepend(topicDiv);
 

@@ -1,7 +1,7 @@
 var topics = ["cats", "dogs", "pigs", "cows"];
 var gifs = [];
 var check = false;
-var favorite = false;
+// var favorite = false;
 function createButtons() {
     for (i in topics) {
 
@@ -18,13 +18,16 @@ $("#submit").on("click", function (event) {
     event.preventDefault();
     $(".put-buttons").empty();
 
-    // console.log("click");
     var newButton = $("#newButton").val();
 
-
-    topics.push(newButton);
-    $("#newButton").val("");
-    createButtons();
+    if (newButton !== "") {
+        topics.push(newButton);
+        $("#newButton").val("");
+        createButtons();
+    }
+    else {
+        createButtons();
+    }
 });
 
 

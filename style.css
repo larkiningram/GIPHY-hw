@@ -3,9 +3,14 @@
     margin: 0 auto;
 }
 
-/* body {
+body {
     background-color: paleturquoise;
-} */
+}
+
+.title {
+  background-color: teal;
+  color: white;
+}
 
 #gifs {
     float: left;
@@ -13,6 +18,9 @@
 
 #form {
     float:right;
+    padding-top: 10px;
+    background-color: whitesmoke;
+    border-radius: 6px;
 }
 
 /* .together {
